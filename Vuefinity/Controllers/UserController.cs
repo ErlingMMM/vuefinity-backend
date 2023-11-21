@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Vuefinity.Data.Models;
 using Vuefinity.Services.Users;
 using Vuefinity.Data.DTO.User;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -91,6 +92,22 @@ namespace Vuefinity.Controllers
             return CreatedAtAction("GetUser",
                 new { id = newUser.Id },
                 _mapper.Map<UserDTO>(newUser));
+        }
+
+        /// <summary>
+        /// Listing top 10 users by score
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpGet("top10")]
+        public async Task<ActionResult<ICollection<User>>> GetTop10UsersByScore()
+        {
+            var top10Users = await _userService.Users
+                .OrderByDescending(u => u.Score)
+                .Take(10)
+                .ToListAsync();
+
+            return Ok(top10Users);
         }
     }
 }

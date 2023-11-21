@@ -7,6 +7,8 @@ namespace Vuefinity.Services.Users
     {
         //Define the methods and operations that services must implement.
         //Provide a level of abstraction and help in unit testing and mocking.
+        IQueryable<User> Users { get; }
+
     }
 }
 

@@ -17,6 +17,8 @@ namespace Vuefinity.Services.Users
             _context = context;
         }
 
+        public IQueryable<User> Users => _context.Users;
+
 
         public async Task<ICollection<User>> GetAllAsync()
         {
@@ -51,6 +53,8 @@ namespace Vuefinity.Services.Users
                 return obj;
             }
         }
+
+
 
       
 
