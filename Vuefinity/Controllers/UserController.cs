@@ -92,7 +92,5 @@ namespace Vuefinity.Controllers
                 new { id = newUser.Id },
                 _mapper.Map<UserDTO>(newUser));
         }
-
-       
     }
 }
