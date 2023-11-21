@@ -60,7 +60,7 @@ namespace Vuefinity.Controllers
         
 
         /// <summary>
-        /// Get a spesific users from database using their id.
+        /// Get a spesific user from database using their id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -72,6 +72,27 @@ namespace Vuefinity.Controllers
                 return Ok(_mapper
                     .Map<UserDTO>(
                         await _userService.GetByIdAsync(id)));
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Get a spesific user from database using their email.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        [HttpGet("byEmail/{email}")]
+        public async Task<ActionResult<UserDTO>> GetUserByEmail(string email)
+        {
+            try
+            {
+                return Ok(_mapper
+                    .Map<UserDTO>(
+                        await _userService.GetByEmailAsync(email)));
             }
             catch (EntityNotFoundException ex)
             {

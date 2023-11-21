@@ -33,6 +33,16 @@ namespace Vuefinity.Services.Users
 
             return user;
         }
+
+        public async Task<User> GetByEmailAsync(string email)
+        {
+            var user = await _context.Users.Where(e => e.Email == email).FirstAsync();
+
+            if (user is null)
+                throw new EntityNotFoundException(nameof(user), email);
+
+            return user;
+        }
         public async Task<User> AddAsync(User obj)
         {
             await _context.Users.AddAsync(obj);

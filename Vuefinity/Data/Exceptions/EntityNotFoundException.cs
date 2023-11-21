@@ -6,5 +6,9 @@
             : base($"{type} with id: {id} could not be found.")
         {
         }
+        public EntityNotFoundException(string type, string email)
+         : base($"{type} with email: {email} could not be found.")
+        {
+        }
     }
 }

@@ -7,7 +7,9 @@ namespace Vuefinity.Services
     public interface ICrudService<TEntity, TID>
     {
         Task<ICollection<TEntity>> GetAllAsync();
-        Task<TEntity> GetByIdAsync(TID mail);
+        Task<TEntity> GetByIdAsync(TID id);
+        Task<TEntity> GetByEmailAsync(string email);
+
         Task<TEntity> AddAsync(TEntity obj);
         Task<TEntity> UpdateAsync(TEntity obj);
     }
