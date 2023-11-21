@@ -30,7 +30,26 @@ namespace Vuefinity.Controllers
         }
 
 
-    
+          /// <summary>
+        /// Gets a list of all users.
+        /// </summary>
+        /// <returns>A list of user objects.</returns>
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            try
+            {
+                var users = await _userService.GetAllAsync();
+                var userDTOs = _mapper.Map<IEnumerable<UserDTO>>(users);
+                return Ok(userDTOs);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+
         /// <summary>
         /// Creating a new user to the database
         /// </summary>
