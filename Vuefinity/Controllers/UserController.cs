@@ -37,13 +37,13 @@ namespace Vuefinity.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<UserDTO>> PostExercise(UserPostDTO exercise)
+        public async Task<ActionResult<UserDTO>> PostExercise(UserPostDTO user)
         {
-            var newExercise = await _userService.AddAsync(_mapper.Map<User>(exercise));
+            var newUser = await _userService.AddAsync(_mapper.Map<User>(user));
 
             return CreatedAtAction("GetExercise",
-                new { id = newExercise.Id },
-                _mapper.Map<UserDTO>(newExercise));
+                new { id = newUser.Id },
+                _mapper.Map<UserDTO>(newUser));
         }
 
        
