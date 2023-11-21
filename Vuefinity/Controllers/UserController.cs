@@ -32,16 +32,16 @@ namespace Vuefinity.Controllers
 
     
         /// <summary>
-        /// Creating a new exercise to the database
+        /// Creating a new user to the database
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<UserDTO>> PostExercise(UserPostDTO user)
+        public async Task<ActionResult<UserDTO>> PostUser(UserPostDTO user)
         {
             var newUser = await _userService.AddAsync(_mapper.Map<User>(user));
 
-            return CreatedAtAction("GetExercise",
+            return CreatedAtAction("GetUser",
                 new { id = newUser.Id },
                 _mapper.Map<UserDTO>(newUser));
         }
