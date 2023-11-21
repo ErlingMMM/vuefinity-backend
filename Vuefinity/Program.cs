@@ -4,17 +4,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using System;
-using Vuefinity.Services.Users;
 using Microsoft.OpenApi.Models;
+using System;
+using System.IO;
 using System.Reflection;
-using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
+using Vuefinity.Data;
+using Vuefinity.Services.Users;
 
-
-
-
-namespace Vuefinity.Data
+namespace Vuefinity
 {
     public class Program
     {
@@ -22,9 +19,23 @@ namespace Vuefinity.Data
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(options =>
+            // Configure services
+            ConfigureServices(builder.Services, builder.Configuration);
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline
+            Configure(app, builder.Environment);
+
+            app.Run();
+        }
+
+        private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddControllers();
+            services.AddEndpointsApiExplorer();
+
+            services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
@@ -38,53 +49,49 @@ namespace Vuefinity.Data
                         Url = new Uri("https://example.com/contact")
                     }
                 });
-                // using System.Reflection;
+
+                // Get the XML comments file
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFilename);
+
+                // Include XML comments in Swagger
+                if (File.Exists(xmlPath))
+                {
+                    options.IncludeXmlComments(xmlPath);
+                }
             });
 
+            services.AddDbContext<VuefinityDdContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("Vuefinity")));
 
-            builder.Services.AddDbContext<VuefinityDdContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("Vuefinity")));
-            // Add our service
-            builder.Services.AddScoped<IUserService, UserService>();
-          
-            // Add automapper
-            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            builder.Services.AddAutoMapper(typeof(UserService));
-  
+            services.AddScoped<IUserService, UserService>();
 
-            var app = builder.Build();
+            // Add AutoMapper
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        }
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+        private static void Configure(WebApplication app, IHostEnvironment env)
+        {
+            if (env.IsDevelopment())
             {
+                // Enable Swagger in development
                 app.UseSwagger(options =>
                 {
                     options.SerializeAsV2 = true;
-                }
-                );
-                app.UseSwaggerUI(options =>
+                });
+
+                app.UseSwaggerUI(c =>
                 {
-                    app.UseSwaggerUI(c =>
-                    {
-                        c.RoutePrefix = "swagger";
-                        c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                    });
+                    c.RoutePrefix = "swagger";
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                 });
             }
 
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.MapControllers();
-
-            app.Run();
         }
     }
 }
