@@ -123,14 +123,20 @@ namespace Vuefinity.Controllers
             {
                 var existingUser = await _userService.GetByIdAsync(id);
 
-                // Update the user's score
-                existingUser.Score = updateUserScoreDTO.NewScore;
+                if(updateUserScoreDTO.NewScore >  existingUser.Score)
+                {
+                    // Update the user's score
+                    existingUser.Score = updateUserScoreDTO.NewScore;
 
-                // Save the changes to the database
-                await _userService.UpdateAsync(existingUser);
+                    // Save the changes to the database
+                    await _userService.UpdateAsync(existingUser);
 
-                // Return the updated user information
-                return Ok(_mapper.Map<UserDTO>(existingUser));
+                    // Return the updated user information
+                    return Ok(_mapper.Map<UserDTO>(existingUser));
+                }
+
+                return BadRequest("New score must be higher than the existing score.");
+
             }
             catch (EntityNotFoundException ex)
             {
