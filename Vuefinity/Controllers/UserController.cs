@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Vuefinity.Data.Models;
 using Vuefinity.Services.Users;
 using Vuefinity.Data.DTO.User;
+using Vuefinity.Data.DTO.Score;
 using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -109,5 +110,38 @@ namespace Vuefinity.Controllers
 
             return Ok(top10Users);
         }
+
+        /// <summary>
+        ///Update user score if the new score is higher than the old score.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPut("{id}/updateScore")]
+        public async Task<ActionResult<UserDTO>> UpdateUserScore(int id, [FromBody] UpdateUserScoreDTO updateUserScoreDTO)
+        {
+            try
+            {
+                var existingUser = await _userService.GetByIdAsync(id);
+
+                // Update the user's score
+                existingUser.Score = updateUserScoreDTO.NewScore;
+
+                // Save the changes to the database
+                await _userService.UpdateAsync(existingUser);
+
+                // Return the updated user information
+                return Ok(_mapper.Map<UserDTO>(existingUser));
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while updating the score for user with ID {id}.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }
