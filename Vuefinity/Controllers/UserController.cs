@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 using Vuefinity.Data.Exceptions;
 using Vuefinity.Data.Models;
-using Vuefinity.Services.Exercises;
-using Vuefinity.Data.DTO.Exercise;
+using Vuefinity.Services.Users;
+using Vuefinity.Data.DTO.User;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
