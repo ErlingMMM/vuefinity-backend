@@ -10,6 +10,5 @@ namespace Vuefinity.Services
         Task<TEntity> GetByMailAsync(TID mail);
         Task<TEntity> AddAsync(TEntity obj);
         Task<TEntity> UpdateAsync(TEntity obj);
-        Task DeleteByIdAsync(TID id);
     }
 }

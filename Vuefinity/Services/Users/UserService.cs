@@ -22,12 +22,12 @@ namespace Vuefinity.Services.Users
         {
             return await _context.Users.ToListAsync();
         }
-        public async Task<User> GetByEmailAsync(string mail)
+        public async Task<User> GetByEmailAsync(string email)
         {
-            var user = await _context.Users.Where(e => e.mail == mail).FirstAsync();
+            var user = await _context.Users.Where(e => e.Email == email).FirstAsync();
 
             if (user is null)
-                throw new EntityNotFoundException(nameof(user), mail);
+                throw new EntityNotFoundException(nameof(user), email);
 
             return user;
         }
@@ -41,8 +41,8 @@ namespace Vuefinity.Services.Users
         public async Task<User> UpdateAsync(User obj)
         {
             {
-                if (!await ExerciseExistsAsync(obj.mail))
-                    throw new EntityNotFoundException(nameof(User), obj.mail);
+                if (!await UserExistsAsync(obj.Email))
+                    throw new EntityNotFoundException(nameof(User), obj.Email);
 
 
                 _context.Entry(obj).State = EntityState.Modified;
@@ -52,12 +52,21 @@ namespace Vuefinity.Services.Users
             }
         }
 
-        //Helper Methods
-        private async Task<bool> UserExistsAsync(string mail)
+        public async Task<User> GetByMailAsync(string email)
         {
-            return await _context.Users.AnyAsync(e => e.mail == mail);
+            var user = await _context.Users.Where(e => e.Email == email).FirstAsync();
+
+            if (user is null)
+                throw new EntityNotFoundException(nameof(user), email);
+
+            return user;
         }
- 
+
+        //Helper Methods
+        private async Task<bool> UserExistsAsync(string email)
+        {
+            return await _context.Users.AnyAsync(e => e.Email == email);
+        }
     }
 }
 

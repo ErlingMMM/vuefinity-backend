@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 using Vuefinity.Data.Exceptions;
+using Microsoft.Extensions.Logging;
 using Vuefinity.Data.Models;
 using Vuefinity.Services.Users;
 using Vuefinity.Data.DTO.User;
@@ -22,11 +23,13 @@ namespace Vuefinity.Controllers
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper, ILogger<UserController> logger)
         {
             _userService = userService;
             _mapper = mapper;
+            _logger = logger;
         }
 
 
@@ -45,6 +48,8 @@ namespace Vuefinity.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error occurred while processing GetAllUsers.");
+
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -61,7 +66,7 @@ namespace Vuefinity.Controllers
             var newUser = await _userService.AddAsync(_mapper.Map<User>(user));
 
             return CreatedAtAction("GetUser",
-                new { id = newUser.Id },
+                new { email = newUser.Email },
                 _mapper.Map<UserDTO>(newUser));
         }
 

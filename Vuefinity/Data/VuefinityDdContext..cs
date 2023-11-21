@@ -7,7 +7,7 @@ namespace Vuefinity.Data
     public class VuefinityDdContext : DbContext
     {
 
-        public VuefinityDdContext(DbContextOptions<DdContext> options) : base(options)
+        public VuefinityDdContext(DbContextOptions<VuefinityDdContext> options) : base(options)
         {
         }
         public DbSet<User> Users { get; set; }
