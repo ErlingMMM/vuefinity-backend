@@ -10,6 +10,7 @@ namespace Vuefinity.Data.Models
     public class User
     {
         [Key]
+        public int Id { get; set; }
         [StringLength(255)]
         public string Email { get; set; } = null!;
 

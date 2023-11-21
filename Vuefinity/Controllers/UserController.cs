@@ -66,7 +66,7 @@ namespace Vuefinity.Controllers
             var newUser = await _userService.AddAsync(_mapper.Map<User>(user));
 
             return CreatedAtAction("GetUser",
-                new { email = newUser.Email },
+                new { id = newUser.Id },
                 _mapper.Map<UserDTO>(newUser));
         }
 

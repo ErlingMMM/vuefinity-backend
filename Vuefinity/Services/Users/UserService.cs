@@ -22,12 +22,12 @@ namespace Vuefinity.Services.Users
         {
             return await _context.Users.ToListAsync();
         }
-        public async Task<User> GetByEmailAsync(string email)
+        public async Task<User> GetByIdAsync(int id)
         {
-            var user = await _context.Users.Where(e => e.Email == email).FirstAsync();
+            var user = await _context.Users.Where(e => e.Id == id).FirstAsync();
 
             if (user is null)
-                throw new EntityNotFoundException(nameof(user), email);
+                throw new EntityNotFoundException(nameof(user), id);
 
             return user;
         }

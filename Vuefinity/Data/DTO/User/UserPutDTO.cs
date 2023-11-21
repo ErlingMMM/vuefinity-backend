@@ -4,6 +4,7 @@ namespace Vuefinity.Data.DTO.User
 {
     public class UserPutDTO
     {
+        public int Id { get; set; }
 
         [StringLength(255)]
         public string Email { get; set; } = null!;
