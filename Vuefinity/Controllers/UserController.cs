@@ -33,10 +33,11 @@ namespace Vuefinity.Controllers
         }
 
 
-          /// <summary>
+        /// <summary>
         /// Gets a list of all users.
         /// </summary>
         /// <returns>A list of user objects.</returns>
+        
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -51,6 +52,28 @@ namespace Vuefinity.Controllers
                 _logger.LogError(ex, "An error occurred while processing GetAllUsers.");
 
                 return StatusCode(500, "Internal server error");
+            }
+        }
+
+        
+
+        /// <summary>
+        /// Get a spesific users from database using their id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDTO>> GetUser(int id)
+        {
+            try
+            {
+                return Ok(_mapper
+                    .Map<UserDTO>(
+                        await _userService.GetByIdAsync(id)));
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
         }
 
