@@ -16,6 +16,8 @@ namespace Vuefinity.Data.Models
 
         [StringLength(100)]
         public string Name { get; set; } = null!;
+
+        public int Score { get; set; }
       
     }
 }
