@@ -10,9 +10,9 @@ namespace Vuefinity.Services.Users
         //Handle tasks like data validation, processing, and interactions with the database or external APIs.
         //Ensure that the application's business rules are enforced.
 
-        private readonly DdContext _context;
+        private readonly VuefinityDdContext _context;
 
-        public UserService(DdContext context)
+        public UserService(VuefinityDdContext context)
         {
             _context = context;
         }
