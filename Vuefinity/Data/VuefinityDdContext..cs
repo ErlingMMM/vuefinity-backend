@@ -23,14 +23,19 @@ namespace Vuefinity.Data
                     Id = 1,
                     Name = "TestUser1",
                     Email = "test@mail.com",
-                    Score = 0
+                    Score = 0,
+                    PhoneNumber = "12345678",
+                    AllowContact = true
                 },
                 new User
                 {
                     Id = 2,
                     Name = "TestUser2",
                     Email = "test2@mail.com",
-                    Score = 0
+                    Score = 0,
+                    PhoneNumber = "12345678",
+                    AllowContact = true
+
                 }
             );
         }

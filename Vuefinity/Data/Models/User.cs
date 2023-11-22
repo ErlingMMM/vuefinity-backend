@@ -19,6 +19,12 @@ namespace Vuefinity.Data.Models
         public string Name { get; set; } = null!;
 
         public int Score { get; set; }
-      
+
+        [StringLength(20)]
+        public string PhoneNumber { get; set; } = null!;
+
+        public Boolean AllowContact { get; set; }
+
+
     }
 }
