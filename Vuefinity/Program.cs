@@ -87,6 +87,7 @@ namespace Vuefinity
                 });
             }
 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
