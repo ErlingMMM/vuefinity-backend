@@ -16,7 +16,7 @@ namespace Vuefinity.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=N-NO-01-01-6434\\SQLEXPRESS; Initial Catalog=VuefinityEF; Integrated Security= true; Trust Server Certificate= true;");
+            optionsBuilder.UseSqlServer("Data Source=N-NO-01-01-9570\\SQLEXPRESS; Initial Catalog=VuefinityEF; Integrated Security= true; Trust Server Certificate= true;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
