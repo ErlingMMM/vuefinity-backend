@@ -26,7 +26,7 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: swagger tofile --output "./publish/swagger.json" "C:/Users/EMolan/source/repos/Vuefinity/path/to/your/output/directory/Vuefinity.dll" "v1"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
