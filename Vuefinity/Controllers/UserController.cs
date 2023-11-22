@@ -156,7 +156,7 @@ namespace Vuefinity.Controllers
                     return Ok(_mapper.Map<UserDTO>(existingUser));
                 }
 
-                return BadRequest("New score must be higher than the existing score.");
+                return Ok("New score must be higher than the existing score.");
 
             }
             catch (EntityNotFoundException ex)

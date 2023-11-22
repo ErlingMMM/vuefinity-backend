@@ -11,7 +11,7 @@ using Vuefinity.Data;
 namespace Vuefinity.Migrations
 {
     [DbContext(typeof(VuefinityDdContext))]
-    [Migration("20231121133745_VuefinityEF")]
+    [Migration("20231122101237_VuefinityEF")]
     partial class VuefinityEF
     {
         /// <inheritdoc />
