@@ -12,13 +12,6 @@ namespace Vuefinity.Data
         }
         public DbSet<User> Users { get; set; }
 
-    
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source=N-NO-01-01-6434\\SQLEXPRESS; Initial Catalog=VuefinityEF; Integrated Security= true; Trust Server Certificate= true;");
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         

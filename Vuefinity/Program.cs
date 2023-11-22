@@ -62,7 +62,7 @@ namespace Vuefinity
             });
 
             services.AddDbContext<VuefinityDdContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Vuefinity")));
+                options.UseSqlServer(configuration.GetConnectionString("Default")));
 
             services.AddScoped<IUserService, UserService>();
 

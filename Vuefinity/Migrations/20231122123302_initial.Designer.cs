@@ -11,8 +11,8 @@ using Vuefinity.Data;
 namespace Vuefinity.Migrations
 {
     [DbContext(typeof(VuefinityDdContext))]
-    [Migration("20231122101237_VuefinityEF")]
-    partial class VuefinityEF
+    [Migration("20231122123302_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
