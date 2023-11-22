@@ -10,6 +10,8 @@ using System.IO;
 using System.Reflection;
 using Vuefinity.Data;
 using Vuefinity.Services.Users;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 
 namespace Vuefinity
 {
@@ -68,7 +70,25 @@ namespace Vuefinity
 
             // Add AutoMapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            var MyAllowSpesificOrigins = "_myAllowSpesificOrigins";
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpesificOrigins, policy =>
+                {
+                    policy.WithOrigins(
+                        "https://vuefinity20231121154528.azurewebsites.net",
+                        "http://localhost:8080")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                });
+            });
+
         }
+
+
 
         private static void Configure(WebApplication app, IHostEnvironment env)
         {
@@ -89,6 +109,7 @@ namespace Vuefinity
 
 
             app.UseHttpsRedirection();
+            app.UseCors();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthorization();
