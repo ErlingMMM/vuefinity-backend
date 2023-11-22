@@ -137,12 +137,12 @@ namespace Vuefinity.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        [HttpPut("{id}/updateScore")]
-        public async Task<ActionResult<UserDTO>> UpdateUserScore(int id, [FromBody] UpdateUserScoreDTO updateUserScoreDTO)
+        [HttpPut("{email}/updateScore")]
+        public async Task<ActionResult<UserDTO>> UpdateUserScore(string email, [FromBody] UpdateUserScoreDTO updateUserScoreDTO)
         {
             try
             {
-                var existingUser = await _userService.GetByIdAsync(id);
+                var existingUser = await _userService.GetByEmailAsync(email);
 
                 if(updateUserScoreDTO.NewScore >  existingUser.Score)
                 {
@@ -165,7 +165,7 @@ namespace Vuefinity.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"An error occurred while updating the score for user with ID {id}.");
+                _logger.LogError(ex, $"An error occurred while updating the score for user with email {email}.");
                 return StatusCode(500, "Internal server error");
             }
         }
