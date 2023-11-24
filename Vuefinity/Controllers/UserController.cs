@@ -170,8 +170,8 @@ namespace Vuefinity.Controllers
             }
         }
 
-        [HttpDelete("deleteOldUsers")]
-        public async Task<IActionResult> DeleteOldUsers()
+        [HttpDelete("deleteAllUsers")]
+        public async Task<IActionResult> DeleteAllUsers()
         {
             try
             {
