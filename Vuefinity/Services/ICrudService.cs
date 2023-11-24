@@ -12,5 +12,7 @@ namespace Vuefinity.Services
 
         Task<TEntity> AddAsync(TEntity obj);
         Task<TEntity> UpdateAsync(TEntity obj);
+
+        Task DeleteAsync(TID id);
     }
 }
