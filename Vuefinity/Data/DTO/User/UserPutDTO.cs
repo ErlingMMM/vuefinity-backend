@@ -15,6 +15,11 @@ namespace Vuefinity.Data.DTO.User
 
         public int Score { get; set; }
 
+        [StringLength(20)]
+        public string PhoneNumber { get; set; } = null!;
+
+        public Boolean AllowContact { get; set; }
+
     }
 }
 
