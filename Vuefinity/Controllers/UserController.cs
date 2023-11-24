@@ -170,5 +170,28 @@ namespace Vuefinity.Controllers
             }
         }
 
+        [HttpDelete("deleteOldUsers")]
+        public async Task<IActionResult> DeleteOldUsers()
+        {
+            try
+            {
+                // Get all users
+                var allUsers = await _userService.Users.ToListAsync();
+
+                // Delete all users
+                foreach (var user in allUsers)
+                {
+                    await _userService.DeleteAsync(user.Id);
+                }
+
+                return Ok("All users deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while deleting users.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }

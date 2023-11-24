@@ -64,9 +64,20 @@ namespace Vuefinity.Services.Users
             }
         }
 
+        public async Task DeleteAsync(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+            }
+        }
 
 
-      
+
+
 
         //Helper Methods
         private async Task<bool> UserExistsAsync(int id)

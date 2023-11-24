@@ -9,6 +9,8 @@ namespace Vuefinity.Services.Users
         //Provide a level of abstraction and help in unit testing and mocking.
         IQueryable<User> Users { get; }
 
+        Task DeleteAsync(int userId);
+
     }
 }
 
